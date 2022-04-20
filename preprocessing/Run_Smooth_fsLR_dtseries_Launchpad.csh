@@ -9,6 +9,7 @@ set stop = 100 #change
 
 set FWHM = 4
 set sigma = 1.47 #FWHM = 4, sigma = FHWM/2.355
+set TemporalFilter = 200
 set att_file = list_100Unrelated.txt
 set runs = (LR RL)
 set taskn = (LANGUAGE)
@@ -17,7 +18,7 @@ while($count <= $stop)
     set sub = `head -n $count $att_file | tail -n 1 | awk '{print $1}'`
     echo "${count}:${sub}"
 	foreach run($runs)
-	set filename = tfMRI_${taskn}_$runi_Atlas
+	set filename = tfMRI_${taskn}_$run_Atlas
 	set cmd = "wb_command -cifti-smoothing ${InPath}/${sub}/${filename}.dtseries.nii ${sigma} ${sigma} COLUMN ${InPath}/${sub}/${filename}_s${FWHM}.dtseries.nii -left-surface $Downsamplefolder/${sub}/MNINonLinear/fsaverage_LR32k/${sub}.L.midthickness.32k_fs_LR.surf.gii -right-surface $Downsamplefolder/${sub}/MNINonLinear/fsaverage_LR32k/${sub}.R.midthickness.32k_fs_LR.surf.gii"
 	eval $cmd
 	
